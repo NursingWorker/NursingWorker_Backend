@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>获取微信授权Code</title>
+</head>
+<body>
+<button onclick="authorize()">点击获取微信授权</button>
+
+<script>
+    function authorize() {
+        var appid = 'wx6d1d297ae4b24b5a'; // 替换为你的微信公众号或移动应用的 AppID
+        var redirectUri = encodeURIComponent('http://43.138.61.49:8080/api/v1/login'); // 替换为你的授权回调地址
+
+        // 构造授权 URL
+        var authUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid +
+            '&redirect_uri=' + redirectUri +
+            '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+
+        // 跳转到授权 URL
+        window.location.href = authUrl;
+    }
+</script>
+</body>
+</html>

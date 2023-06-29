@@ -8,7 +8,7 @@ import (
 
 func TokenMiddleWare(c *gin.Context) {
 	openID := service.GetToken(c)
-	if openID == "" || model.TokenLatest(openID) != openID {
+	if openID == "" || model.TokenLatest(openID) != c.GetHeader("Authorization") {
 		c.JSON(200, gin.H{"code": 200, "msg": "权限不足"})
 		c.Abort()
 		return

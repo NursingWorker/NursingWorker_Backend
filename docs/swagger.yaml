@@ -1,0 +1,889 @@
+basePath: /api/v1
+definitions:
+  model.Comment:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      postID:
+        type: string
+      userID:
+        type: string
+    type: object
+  model.Post:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.Reply:
+    properties:
+      cmtID:
+        type: string
+      content:
+        type: string
+      id:
+        type: integer
+      obtID:
+        type: string
+      userID:
+        type: string
+    type: object
+  model.User:
+    properties:
+      address:
+        type: string
+      age:
+        type: string
+      avatar:
+        type: string
+      experience:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      identity:
+        type: string
+      intro:
+        type: string
+      nickName:
+        type: string
+      stature:
+        type: string
+    type: object
+  utils.Error:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+    type: object
+  utils.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+host: 43.138.61.49
+info:
+  contact:
+    email: 3264085417@qq.com
+    name: BIG_DUST
+  description: NursingAPI
+  termsOfService: http://swagger.io/terrms/
+  title: Nursing
+  version: 1.1.0
+paths:
+  /api/v1/collect:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: 取消收藏记录
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: query
+        name: postID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: cancel collect success
+          schema:
+            type: string
+        "400":
+          description: 错误信息
+          schema:
+            type: string
+      summary: 取消收藏
+      tags:
+      - 收藏
+    post:
+      consumes:
+      - multipart/form-data
+      description: 创建收藏记录
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: query
+        name: postID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: collect success
+          schema:
+            type: string
+        "400":
+          description: 错误信息
+          schema:
+            type: string
+      summary: 收藏
+      tags:
+      - 收藏
+  /api/v1/like:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: 取消点赞记录
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: query
+        name: postID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: cancel like success
+          schema:
+            type: string
+        "400":
+          description: 错误信息
+          schema:
+            type: string
+      summary: 取消点赞
+      tags:
+      - 点赞
+    post:
+      consumes:
+      - multipart/form-data
+      description: 创建点赞记录
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: query
+        name: postID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: like success
+          schema:
+            type: string
+        "400":
+          description: 错误信息
+          schema:
+            type: string
+      summary: 点赞
+      tags:
+      - 点赞
+  /api/v1/login:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 要一个code
+      parameters:
+      - description: code
+        in: query
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取用户信息
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 登录
+      tags:
+      - 用户管理
+  /api/v1/post:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: 删除帖子
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: query
+        name: postID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功删除帖子
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 删除帖子
+      tags:
+      - 帖子管理
+    post:
+      consumes:
+      - multipart/form-data
+      description: 发布帖子
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 标题
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: 内容
+        in: formData
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功发布帖子
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 发布帖子
+      tags:
+      - 帖子管理
+  /api/v1/post/comment:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: 删除评论
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 评论ID
+        in: query
+        name: commentID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功删除评论
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 删除评论
+      tags:
+      - 帖子管理
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取评论
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: query
+        name: postID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取评论
+          schema:
+            items:
+              $ref: '#/definitions/model.Comment'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取评论
+      tags:
+      - 帖子管理
+    post:
+      consumes:
+      - multipart/form-data
+      description: 发布评论
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 帖子ID
+        in: formData
+        name: postID
+        required: true
+        type: string
+      - description: 评论内容
+        in: formData
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功发布评论
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 发布评论
+      tags:
+      - 帖子管理
+  /api/v1/post/comment/reply:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: 删除回复
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 回复ID
+        in: query
+        name: replyID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功删除回复
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 删除回复
+      tags:
+      - 帖子管理
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取评论的回复
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 评论ID
+        in: query
+        name: commentID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取回复
+          schema:
+            items:
+              $ref: '#/definitions/model.Reply'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取评论的回复
+      tags:
+      - 帖子管理
+    post:
+      consumes:
+      - multipart/form-data
+      description: 发布回复
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 评论ID
+        in: formData
+        name: commentID
+        required: true
+        type: string
+      - description: 对象ID
+        in: formData
+        name: objectID
+        required: true
+        type: string
+      - description: 回复内容
+        in: formData
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功发布回复
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 发布回复
+      tags:
+      - 帖子管理
+  /api/v1/post/recommendation:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取推荐的帖子
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 数量
+        in: query
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取推荐的帖子
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取推荐的帖子
+      tags:
+      - 帖子管理
+  /api/v1/user/{id}:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取用户基本信息
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取用户信息
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取用户基本信息
+      tags:
+      - 用户管理
+  /api/v1/user/{id}/collection:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取收藏的帖子
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取收藏的帖子
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取收藏的帖子
+      tags:
+      - 用户管理
+  /api/v1/user/{id}/fans:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取粉丝
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取粉丝
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取粉丝
+      tags:
+      - 用户管理
+  /api/v1/user/{id}/like:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取点赞的帖子
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取点赞的帖子
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取点赞的帖子
+      tags:
+      - 用户管理
+  /api/v1/user/{id}/post:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取已发布的帖子
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取已发布的帖子
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取已发布的帖子
+      tags:
+      - 用户管理
+  /api/v1/user/{id}/subscribe:
+    get:
+      consumes:
+      - multipart/form-data
+      description: 获取关注的人
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功获取关注的人
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 获取关注的人
+      tags:
+      - 用户管理
+  /api/v1/user/avatar:
+    put:
+      consumes:
+      - multipart/form-data
+      description: 更新头像
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 头像文件
+        in: formData
+        name: avatar
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功更新头像
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 更新头像
+      tags:
+      - 用户管理
+  /api/v1/user/identity:
+    put:
+      consumes:
+      - multipart/form-data
+      description: 更新身份
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 身份
+        in: query
+        name: identity
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功更新身份
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 更新身份
+      tags:
+      - 用户管理
+  /api/v1/user/info:
+    put:
+      consumes:
+      - multipart/form-data
+      description: 更新基本信息
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 昵称
+        in: formData
+        name: nickname
+        required: true
+        type: string
+      - description: 简介
+        in: formData
+        name: intro
+        required: true
+        type: string
+      - description: 年龄
+        in: formData
+        name: age
+        required: true
+        type: string
+      - description: 性别
+        in: formData
+        name: gender
+        required: true
+        type: string
+      - description: 身高
+        in: formData
+        name: stature
+        required: true
+        type: string
+      - description: 地址
+        in: formData
+        name: address
+        required: true
+        type: string
+      - description: 经验/经历
+        in: formData
+        name: experience
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功更新基本信息
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 更新基本信息
+      tags:
+      - 用户管理
+  /api/v1/user/subscribe:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: 取消关注用户
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 被取消关注用户ID
+        in: query
+        name: idolID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功取消关注用户
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 取消关注用户
+      tags:
+      - 用户管理
+    post:
+      consumes:
+      - multipart/form-data
+      description: 关注用户
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 被关注用户ID
+        in: query
+        name: idolID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功关注用户
+          schema:
+            $ref: '#/definitions/utils.Response'
+        "400":
+          description: 失败
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: 关注用户
+      tags:
+      - 用户管理
+schemes:
+- http
+swagger: "2.0"

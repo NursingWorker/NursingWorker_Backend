@@ -13,6 +13,9 @@ import (
 )
 
 func Register(r *gin.Engine) {
+	r.GET("/h", func(c *gin.Context) {
+		c.HTML(200,"login.html",nil) // 将index.html文件返回给前端
+	})
 	r.POST("/api/v1/login", user.AppWeChatLogin)
 	v1 := r.Group("/api/v1", mid.TokenMiddleWare)
 	p := v1.Group("/post")

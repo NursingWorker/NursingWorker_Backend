@@ -10,7 +10,7 @@ import (
 var DB *gorm.DB
 
 func InitDB() error {
-	dsn := fmt.Sprintf("%v:%v@tcp(43.138.61.49:3306)/Heart?charset=utf8mb4&parseTime=True&loc=Local", viper.GetString("username"), viper.GetString("password"))
+	dsn := fmt.Sprintf("%v:%v@tcp(43.138.61.49:3306)/nursing?charset=utf8mb4&parseTime=True&loc=Local", viper.GetString("db.username"), viper.GetString("db.password"))
 	var err error
 	if DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
 		return err

@@ -14,17 +14,17 @@ type Error struct {
 }
 
 func SendError(c *gin.Context, code int, error string) {
-	c.JSON(code, gin.H{
-		"code": code,
-		"msg":  error,
+	c.JSON(code, Error{
+		Code: code,
+		Error: error,
 	})
 }
 
 func SendResponse(c *gin.Context, message string, data interface{}) {
-	c.JSON(200, gin.H{
-		"code": 200,
-		"msg":  message,
-		"data": data,
+	c.JSON(200, Response{
+		Code: 200,
+		Msg:  message,
+		Data: data,
 	})
 }
 

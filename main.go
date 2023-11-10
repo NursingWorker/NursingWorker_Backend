@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"log"
 	"nursing_work/config"
+	"nursing_work/handler/chat"
 	"nursing_work/model"
 	"nursing_work/pkg/qiniu"
 	"nursing_work/router"
@@ -28,10 +30,11 @@ func main() {
 	}
 	utils.Init()
 	qiniu.Load()
+	chat.Chs = make(map[string]chan string, 1000)
+	chat.Conns = make(map[string]*chat.WsConnection, 1000)
 	engine := gin.Default()
-	engine.LoadHTMLGlob("/home/nursing/static/*")
 	router.Register(engine)
-	if err := engine.Run("0.0.0.0:4386");err != nil {
+	if err := engine.Run(viper.GetString("server_ip")); err != nil {
 		log.Println(err)
-}
+	}
 }

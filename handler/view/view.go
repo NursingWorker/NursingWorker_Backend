@@ -7,14 +7,23 @@ import (
 	"nursing_work/utils"
 )
 
-func Mine(c *gin.Context) {
-	//carerID := c.Query("carerID")
-
+func View(c *gin.Context) {
+	userID := c.Param("id")
+	if userID == "0" {
+		tmp, _ := c.Get("openID")
+		userID = model.UserID(fmt.Sprint(tmp))
+	}
+	view, err := model.FindView(userID)
+	if err != nil {
+		utils.SendError(c, 200, err.Error())
+		return
+	}
+	utils.SendResponse(c, "查询到对象做出的评价", view)
 }
 
 func Other(c *gin.Context) {
-
 	//carerID := c.Query("carerID")
+
 }
 func Create(c *gin.Context) {
 	var view model.View

@@ -29,18 +29,20 @@ func Type(c *gin.Context) {
 
 }
 
-func View(c *gin.Context){
+func View(c *gin.Context) {
+	carerID := c.Query("carer_id")
+	views, err := model.FindViewByCarerID(carerID)
+	if err != nil {
+		utils.SendError(c, 200, err.Error())
+		return
+	}
+	utils.SendResponse(c, "查询到指定护工的评价", views)
+}
+
+func ViewCt(c *gin.Context) {
 
 }
 
-func IsHire(c *gin.Context){
-
-}
-
-func ViewCt(c *gin.Context){
-
-}
-
-func ViewDt(c *gin.Context){
+func ViewDt(c *gin.Context) {
 
 }

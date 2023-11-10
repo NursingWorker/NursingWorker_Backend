@@ -1,10 +1,13 @@
-package model
+package main
 
 import (
 	"fmt"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
+	"nursing_work/config"
+	"nursing_work/model"
 )
 
 var DB *gorm.DB
@@ -21,4 +24,14 @@ func InitDB() error {
 		return err
 	}
 	return nil
+}
+
+func main() {
+	if err := config.Init("./conf/config.yaml", ""); err != nil {
+		log.Println(err)
+	}
+	InitDB()
+	DB.AutoMigrate(&model.Comment{}, &model.User{}, &model.Token{}, &model.Post{},
+		&model.Collection{}, &model.PostFl{}, &model.View{}, &model.Videos{},
+		&model.Follow{}, &model.Like{}, &model.Reply{}, &model.Images{})
 }

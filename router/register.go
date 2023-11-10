@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"nursing_work/handler/carer"
+	"nursing_work/handler/chat"
 	"nursing_work/handler/collect"
 	"nursing_work/handler/hire"
 	"nursing_work/handler/like"
@@ -13,10 +14,8 @@ import (
 )
 
 func Register(r *gin.Engine) {
-	r.GET("/h", func(c *gin.Context) {
-		c.HTML(200,"login.html",nil) // 将index.html文件返回给前端
-	})
 	r.POST("/api/v1/login", user.AppWeChatLogin)
+	//r.POST("/api/v1/email-login", user.t)
 	v1 := r.Group("/api/v1", mid.TokenMiddleWare)
 	p := v1.Group("/post")
 	{
@@ -63,25 +62,32 @@ func Register(r *gin.Engine) {
 	{
 		h.GET("/recommendation", carer.Recmt) //获取推荐护工
 		h.GET("/search", carer.Search)        //搜索护工
-		h.GET("", carer.Type)            //根据类型返回
-		h.GET("/view", carer.View)            // 获得护工评价
-		h.GET("/is_hire",carer.IsHire)					//验证是否雇佣
-		h.POST("/view",carer.ViewCt)				//发表评价
-		h.DELETE("/view",carer.ViewDt)				//删除评价
+		h.GET("", carer.Type)                 //根据类型返回 1
+		h.GET("/view", carer.View)            // 获得护工评价 2
+		//h.GET("/is_hire", carer.IsHire)       //验证是否雇佣
+		//h.POST("/view", carer.ViewCt)         //发表评价
+		//h.DELETE("/view", carer.ViewDt)       //删除评价
 	}
 
 	v := v1.Group("/view")
 	{
-		v.GET("/:id/other", view.Other) //用户评价
-		v.POST("", view.Create)         //评价指定护工
-		v.DELETE("", view.Delete)       //删除评价
+		v.POST("", view.Create)   //评价指定护工 3
+		v.DELETE("", view.Delete) //删除评价  4
 
-		v.GET("/:id/mine", view.Mine) //我的评价
+		v.GET("/:id/detail", view.View) //我的评价 5
 	}
 
 	{
-		v1.POST("/hire", hire.Create)   //建立雇佣
-		v1.DELETE("/hire", hire.Delete) //取消雇佣
-		v1.GET("/hire", hire.Verify)    //检测是否雇佣
+		v1.POST("/hire", hire.Create)   //建立雇佣 6
+		v1.DELETE("/hire", hire.Delete) //取消雇佣 7
+		v1.GET("/hire", hire.Verify)    //检测是否雇佣 8
+	}
+
+	// 聊天
+	ch := v1.Group("/chat")
+	{
+		ch.GET("", chat.Chat)
+		ch.GET("/history-one", chat.GetHistory)
+		ch.GET("/history-list", chat.GetHistoryUser)
 	}
 }

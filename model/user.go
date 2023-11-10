@@ -3,15 +3,15 @@ package model
 type User struct {
 	ID         uint   `gorm:"primarykey"`
 	OpenID     string `json:"-"`
-	NickName   string `form:"nickname"`
-	Avatar     string `form:"avatar"`
-	Intro      string `form:"intro"`
-	Age        string `form:"age"`
-	Gender     string `form:"gender"`
-	Stature	   string `form:"stature"`
-	Address    string `form:"address"`
-	Experience string `form:"experience"`
-	Identity   string `form:"identity"`
+	NickName   string `form:"nickname" json:"nickname"`
+	Avatar     string `form:"avatar" json:"avatar"`
+	Intro      string `form:"intro" json:"intro"`
+	Age        string `form:"age" json:"age"`
+	Gender     string `form:"gender" json:"gender"`
+	Stature    string `form:"stature" json:"stature"`
+	Address    string `form:"address" json:"address"`
+	Experience string `form:"experience" json:"experience"`
+	Identity   string `form:"identity" json:"identity"`
 }
 
 type Token struct {

@@ -2,10 +2,10 @@ package model
 
 type Reply struct {
 	ID      uint   `gorm:"primarykey"`
-	CmtID   string `form:"commentID"`
-	ObtID   string `form:"objectID"`
+	CmtID   string `form:"commentID" json:"commentID"`
+	ObtID   string `form:"objectID" json:"objectID"`
 	UserID  string
-	Content string `form:"content"`
+	Content string `form:"content" json:"content"`
 }
 
 func Rep(commentID string) ([]Reply, error) {

@@ -18,6 +18,7 @@ type Images struct {
 	PostID string
 	Path   string
 }
+
 type PostFl struct {
 	ID      uint   `gorm:"primarykey;column:id"`
 	OpenID  string `json:"-"`

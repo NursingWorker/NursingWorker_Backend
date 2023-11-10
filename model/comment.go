@@ -2,9 +2,9 @@ package model
 
 type Comment struct {
 	ID      uint   `gorm:"primarykey"`
-	PostID  string `form:"postID"`
+	PostID  string `form:"postID" json:"postID"`
 	UserID  string
-	Content string `form:"content"`
+	Content string `form:"content" json:"content"`
 }
 
 func Cmt(postID string) ([]Comment, error) {

@@ -1,6 +1,7 @@
 package mid
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"nursing_work/model"
 	"nursing_work/service"
@@ -14,6 +15,7 @@ func TokenMiddleWare(c *gin.Context) {
 		return
 	} else {
 		c.Set("openID", openID)
+		fmt.Println(openID)
 		c.Next()
 		//根据 id 找到对应用户信息并返回
 	}
